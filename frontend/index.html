@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketing GPT - AI-Powered Content Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="abtest-styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header Section -->
+      <header class="header">
+        <div class="header-content">
+          <div class="logo">
+            <i class="fas fa-brain"></i>
+            <h1>Marketing GPT</h1>
+          </div>
+          <p class="tagline">AI-Powered Social Media Content Generator</p>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Form Section -->
+        <section class="form-section">
+          <div class="form-container">
+            <h2>Generate Your Marketing Content</h2>
+            <p class="form-description">
+              Fill in the details below and let AI create engaging social media
+              posts for your brand.
+            </p>
+
+            <form id="contentForm" class="content-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="productName">
+                    <i class="fas fa-box"></i>
+                    Product/Service Name
+                  </label>
+                  <input
+                    type="text"
+                    id="productName"
+                    name="product_name"
+                    placeholder="e.g., EcoFriendly Water Bottle"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="targetAudience">
+                    <i class="fas fa-users"></i>
+                    Target Audience
+                  </label>
+                  <input
+                    type="text"
+                    id="targetAudience"
+                    name="target_audience"
+                    placeholder="e.g., Health-conscious millennials"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="tone">
+                    <i class="fas fa-palette"></i>
+                    Tone
+                  </label>
+                  <select id="tone" name="tone" required>
+                    <option value="">Select tone...</option>
+                    <option value="professional">Professional</option>
+                    <option value="casual">Casual</option>
+                    <option value="humorous">Humorous</option>
+                    <option value="inspirational">Inspirational</option>
+                    <option value="urgent">Urgent</option>
+                    <option value="friendly">Friendly</option>
+                    <option value="authoritative">Authoritative</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="platform">
+                    <i class="fas fa-share-alt"></i>
+                    Platform
+                  </label>
+                  <select id="platform" name="platform" required>
+                    <option value="">Select platform...</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="TikTok">TikTok</option>
+                    <option value="YouTube">YouTube</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" class="generate-btn" id="generateBtn">
+                <i class="fas fa-magic"></i>
+                <span>Generate Content</span>
+                <div class="btn-loading" id="btnLoading">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Results Section -->
+        <section
+          class="results-section"
+          id="resultsSection"
+          style="display: none"
+        >
+          <div class="results-container">
+            <div class="results-header">
+              <h3>Generated Content</h3>
+              <div class="results-actions">
+                <button
+                  class="abtest-btn"
+                  id="abtestBtn"
+                  onclick="marketingGPT.startABTest()"
+                >
+                  <i class="fas fa-flask"></i>
+                  A/B Test These Posts
+                </button>
+                <button
+                  class="stats-btn"
+                  id="statsBtn"
+                  onclick="marketingGPT.showStatistics()"
+                >
+                  <i class="fas fa-chart-bar"></i>
+                  View Statistics
+                </button>
+              </div>
+            </div>
+            <div class="results-grid" id="resultsGrid">
+              <!-- Generated posts will appear here -->
+            </div>
+          </div>
+        </section>
+
+        <!-- A/B Testing Section -->
+        <section
+          class="abtest-section"
+          id="abtestSection"
+          style="display: none"
+        >
+          <div class="abtest-container">
+            <div class="abtest-header">
+              <h3><i class="fas fa-flask"></i> A/B Testing Dashboard</h3>
+              <button
+                class="close-btn"
+                onclick="marketingGPT.hideABTestSection()"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="abtest-content">
+              <div class="abtest-controls">
+                <button
+                  class="btn-primary"
+                  onclick="marketingGPT.startNewABTest()"
+                >
+                  <i class="fas fa-plus"></i> Start New A/B Test
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="marketingGPT.simulateABTest()"
+                >
+                  <i class="fas fa-play"></i> Simulate Test
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="marketingGPT.refreshABTestData()"
+                >
+                  <i class="fas fa-sync"></i> Refresh Data
+                </button>
+              </div>
+              <div class="abtest-results" id="abtestResults">
+                <!-- A/B test results will appear here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats-section" id="statsSection" style="display: none">
+          <div class="stats-container">
+            <div class="stats-header">
+              <h3><i class="fas fa-chart-bar"></i> A/B Testing Statistics</h3>
+              <button
+                class="close-btn"
+                onclick="marketingGPT.hideStatsSection()"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="stats-content">
+              <div class="stats-grid" id="statsGrid">
+                <!-- Statistics will appear here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+          <div class="features-container">
+            <h3>Why Choose Marketing GPT?</h3>
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <h4>AI-Powered</h4>
+                <p>
+                  Advanced AI technology generates creative and engaging content
+                  tailored to your brand.
+                </p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <h4>Engagement Scoring</h4>
+                <p>
+                  Each post comes with an engagement score to help you choose
+                  the best performing content.
+                </p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-sync"></i>
+                </div>
+                <h4>Auto-Integration</h4>
+                <p>
+                  Content automatically saves to Google Sheets and sends to
+                  Slack for team collaboration.
+                </p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h4>Multi-Platform</h4>
+                <p>
+                  Generate content optimized for Instagram, Facebook, Twitter,
+                  LinkedIn, and more.
+                </p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-flask"></i>
+                </div>
+                <h4>A/B Testing</h4>
+                <p>
+                  Test different content variations and automatically determine
+                  which performs better with AI-powered insights.
+                </p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <h4>Analytics & Insights</h4>
+                <p>
+                  Get detailed performance metrics, engagement statistics, and
+                  actionable recommendations for content improvement.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>&copy; 2025 Marketing GPT. Powered by AI for better marketing.</p>
+      </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- A/B Test Debug Panel -->
+    <div class="ab-test-debug" id="abTestDebug">
+      <h4>A/B Test Debug</h4>
+      <div id="debugExperiments"></div>
+    </div>
+
+    <!-- A/B Test Admin Panel -->
+    <div class="ab-test-admin" id="abTestAdmin">
+      <button class="close-btn" onclick="toggleABTestAdmin()">&times;</button>
+      <h3>A/B Test Results</h3>
+      <div id="adminResults"></div>
+    </div>
+
+    <!-- A/B Test Toggle Button -->
+    <button
+      class="ab-test-toggle"
+      id="abTestToggle"
+      onclick="toggleABTestDebug()"
+    >
+      A/B Test
+    </button>
+
+    <script src="ab-testing.js"></script>
+    <script src="abtest-integration.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
