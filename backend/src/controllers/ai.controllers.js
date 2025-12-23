@@ -2,7 +2,7 @@
 import { CohereClient } from "cohere-ai";
 import { appendToSheet } from "../utils/sheets.js";
 import { sendToSlack } from "../utils/slack.js";
-import { optimizePosts } from "../utils/optimizer.js";
+import { optimizePosts } from "../utils/optimize.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -97,7 +97,6 @@ Example:
       model: COHERE_MODEL,
       message: prompt,
       temperature: 0.8,
-      // max_tokens: 350, // enable if your SDK supports it
     });
 
     const text =

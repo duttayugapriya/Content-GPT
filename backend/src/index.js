@@ -19,10 +19,14 @@ connectDB();
 import aiRoutes from "./routes/ai.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
 import abtestRoutes from "./routes/abtest.routes.js";
+import optimizerRoutes from "./routes/optimize.routes.js";
+import insightRoutes from "./routes/insights.routes.js";
 
 app.use("/api", aiRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/abtest", abtestRoutes);
+app.use("/api/optimizer", optimizerRoutes);
+app.use("/api/insights", insightRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
